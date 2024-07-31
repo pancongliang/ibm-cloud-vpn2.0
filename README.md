@@ -5,16 +5,19 @@ This has been updated with some simple scripts and prompt for password (to not l
 
 https://www.ibm.com/cloud/vpn-access
 
+### Setting Environment Variables
+
+```
+export HOST=vpn.xxx.xxx.com
+export USER='xxxx@xxx.com'
+export PASSWD='xxxx'
+export METHOD=radius
+```
+
 ### build
 
 ```
 ./buildit.sh
-```
-
-### update credentials 
-
-```
-vi vpn.ini
 ```
 
 ### usage
@@ -23,9 +26,9 @@ vi vpn.ini
 ./runit.sh 
 ```
 
-### To quit
+### Automatic Start VPN Container
 ```
-CTRL-C
+./VPNcontainer.service
 ```
 
 
