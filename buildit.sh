@@ -1,5 +1,5 @@
 #!/bin/bash
-RUNIT='MotionPro_Linux_RedHat_x64_build-8.sh'
+RUNIT='MotionPro_Linux_RedHat_x64_build-26.sh'
 if test -f "$RUNIT"; then
    echo "$RUNIT exists."
 else
