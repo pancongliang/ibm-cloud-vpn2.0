@@ -40,5 +40,18 @@ EOF
 systemctl enable VPNcontainer.service --now
 ```
 
+4. Access Target environment
+~~~
+# Conatiner hosts:
+export TARGET-IP=xxx
+podman exec -it VPNcontainer /bin/bash -c 'ssh root@$TARGET-IP'
+
+or
+
+#Other:
+export CONTAINER_HOST-IP=xxx
+export TARGET-IP=xxx
+ssh root@$CONTAINER_HOST-IP "podman exec -it VPNcontainer /bin/bash -c 'ssh root@$TARGET-IP'"
+~~~
 
 
