@@ -6,7 +6,7 @@ else
    wget --no-check-certificate -N https://support.arraynetworks.net/prx/000/http/supportportal.arraynetworks.net/downloads/pkg_9_4_0_505/MP_Linux_1.2.18/$RUNIT
 fi
 
-sudo podman build -t ibm-cloud-vpn2.0 .
+podman build -t ibm-cloud-vpn2.0 .
 
 read -p "Remove file $RUNIT (y)? " RESP
 if [ "$RESP" = "y" ]; then
