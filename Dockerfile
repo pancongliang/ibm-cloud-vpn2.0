@@ -1,6 +1,6 @@
 FROM quay.io/fedora/fedora:39-x86_64
 
-ENV RUNIT='MotionPro_Linux_RedHat_x64_build-26.sh'
+ENV RUNIT='MotionPro_Linux_RedHat_x64_build-8383-30.sh'
 
 COPY entrypoint.sh /
 COPY $RUNIT /
