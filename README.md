@@ -62,10 +62,10 @@ systemctl enable VPNcontainer.service --now
 crontab -e
 ~~~
 ~~~
-# Restarting containers periodically
+# Restarting containers.
 10 9 * * * /usr/local/bin/podman restart VPNcontainer
 
-# To ensure token validity, send regular heartbeats
+# Send heartbeats to maintain token validity.
 * */1 * * * /usr/local/bin/podman exec VPNcontainer /bin/bash -c 'ping -c 5 <IP>' > /dev/null 2>&1
 ~~~
 
@@ -74,13 +74,13 @@ crontab -e
 crontab -e
 ~~~
 ~~~
-# Restarting containers periodically
+# Restarting containers.
 10 9 * * * /usr/local/bin/podman restart VPNcontainer
 
-# To ensure token validity, send regular heartbeats
+# Send heartbeats to maintain token validity.
 * */1 * * * /usr/local/bin/podman exec VPNcontainer /bin/bash -c 'ping -c 5 <IP>' > /dev/null 2>&1
 
-# Regularly check the status of the machine and container, and trigger the startup if they are not started
+# Check the status of the machine and container, and trigger the start if they are not started.
 */2 * * * * /usr/local/bin/podman machine list | grep -q 'Currently running' || /usr/local/bin/podman machine start && /usr/local/bin/podman ps --filter "name=VPNcontainer" --filter "status=running" | grep -q VPNcontainer || /usr/local/bin/podman restart VPNcontainer
 ~~~
 
