@@ -18,24 +18,24 @@ yum install -y podman
 
 ### 2. Setting Environment Variables
 
-```
+~~~
 export HOST=vpn.xxx.xxx.com
 export USER='xxxx@xxx.com'
 export PASSWD='xxxx'
 export METHOD=radius
-```
+~~~
 
 ### 3. Build Dockerfile
 
-```
+~~~
 ./buildit.sh
-```
+~~~
 
 ### 4. Start VPNcontainer
 
-```
+~~~
 ./runit.sh 
-```
+~~~
 
 
 ### 5. Automatic Start VPN Container
@@ -62,7 +62,11 @@ systemctl enable VPNcontainer.service --now
 crontab -e
 ~~~
 ~~~
+# Restarting containers periodically
 10 9 * * * /usr/local/bin/podman restart VPNcontainer
+
+# To ensure token validity, send regular heartbeats
+* */1 * * * /usr/local/bin/podman exec VPNcontainer /bin/bash -c 'ping -c 5 <IP>' > /dev/null 2>&1
 ~~~
 
 #### Mac OS:
@@ -70,9 +74,14 @@ crontab -e
 crontab -e
 ~~~
 ~~~
-*/2 * * * * /usr/local/bin/podman machine list | grep -q 'Currently running' || /usr/local/bin/podman machine start && /usr/local/bin/podman ps --filter "name=VPNcontainer" --filter "status=running" | grep -q VPNcontainer || /usr/local/bin/podman restart VPNcontainer
-
+# Restarting containers periodically
 10 9 * * * /usr/local/bin/podman restart VPNcontainer
+
+# To ensure token validity, send regular heartbeats
+* */1 * * * /usr/local/bin/podman exec VPNcontainer /bin/bash -c 'ping -c 5 <IP>' > /dev/null 2>&1
+
+# Regularly check the status of the machine and container, and trigger the startup if they are not started
+*/2 * * * * /usr/local/bin/podman machine list | grep -q 'Currently running' || /usr/local/bin/podman machine start && /usr/local/bin/podman ps --filter "name=VPNcontainer" --filter "status=running" | grep -q VPNcontainer || /usr/local/bin/podman restart VPNcontainer
 ~~~
 
 
