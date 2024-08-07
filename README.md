@@ -5,7 +5,7 @@
 #### Mac OS:
 ~~~
 brew update
-brew install podman
+brew install podman wget
 podman machine init
 podman machine start
 ~~~
