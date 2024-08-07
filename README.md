@@ -82,15 +82,15 @@ crontab -e
 ### 6. Access Target environment
 ~~~
 # Conatiner hosts:
-export TARGET-IP=10.184.134.152
-podman exec -it VPNcontainer /bin/bash -c 'ssh root@$TARGET-IP'
+export TARGET_IP=10.184.134.152
+podman exec -it VPNcontainer /bin/bash -c 'ssh root@$TARGET_IP'
 
 or
 
 # PC to Container hosts:
-export CONTAINER_HOST-IP=xxx
-export TARGET-IP=xxx
-ssh -t root@$CONTAINER_HOST-IP "podman exec -it VPNcontainer /bin/bash -c 'ssh -t root@$TARGET-IP'"
+export CONTAINER_HOST_IP=xxx
+export TARGET_IP=xxx
+ssh -t root@$CONTAINER_HOST-IP "podman exec -it VPNcontainer /bin/bash -c 'ssh -t root@$TARGET_IP'"
 ~~~
 
 
