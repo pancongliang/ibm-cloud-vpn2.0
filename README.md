@@ -62,7 +62,7 @@ crontab -e
 ~~~
 ~~~
 # Restart the container to keep the VPN token valid.
-*/5 * * * * /usr/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@10.184.134.152 "exit" && echo "SSH Succeeded" || echo "SSH Failed"' || /usr/bin/podman restart VPNcontainer
+*/5 * * * * /usr/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@10.184.134.152 "exit"' > /dev/null 2>&1 || { systemctl restart VPNcontainer.service > /dev/null 2>&1; }
 ~~~
 
 #### Mac OS:
@@ -71,8 +71,7 @@ crontab -e
 ~~~
 ~~~
 # Restart the container to keep the VPN token valid.
-*/5 * * * * /usr/local/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@10.184.134.152 "exit" && echo "SSH Succeeded" || echo "SSH Failed"' || /usr/local/bin/podman restart VPNcontainer
-
+*/5 * * * * /usr/local/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@10.184.134.152 "exit"' > /dev/null 2>&1 || { /usr/local/bin/podman restart VPNcontainer > /dev/null 2>&1; }
 
 # Check the status of the machine and container, and trigger the start if they are not started.
 */2 * * * * /usr/local/bin/podman machine list | grep -q 'Currently running' || /usr/local/bin/podman machine start && /usr/local/bin/podman ps --filter "name=VPNcontainer" --filter "status=running" | grep -q VPNcontainer || /usr/local/bin/podman restart VPNcontainer
