@@ -70,7 +70,7 @@ crontab -e
 ~~~
 ~~~
 # Restart the container to keep the VPN token valid.
-*/5 * * * * /usr/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@$TARGET_IP "exit"' > /dev/null 2>&1 || { systemctl restart VPNcontainer.service > /dev/null 2>&1; }
+*/5 * * * * /usr/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@$TARGET_IP "exit"' && echo "$(date): SSH Succeeded" >> /var/log/ssh.log 2>&1 || { echo "$(date): SSH Failed" >> /var/log/ssh.log 2>&1; /bin/systemctl restart VPNcontainer.service && echo "$(date): VPNcontainer restarted" >> /var/log/ssh.log 2>&1; }
 ~~~
 
 #### Mac OS:
@@ -84,7 +84,7 @@ crontab -e
 ~~~
 ~~~
 # Restart the container to keep the VPN token valid.
-*/5 * * * * /usr/local/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@$TARGET_IP "exit"' > /dev/null 2>&1 || { /usr/local/bin/podman restart VPNcontainer > /dev/null 2>&1; }
+*/5 * * * * /usr/local/bin/podman exec -it VPNcontainer /bin/bash -c 'ssh -o BatchMode=yes -t root@$TARGET_IP "exit"' && echo "$(date): SSH Succeeded" >> ~/Library/Logs/ssh.log 2>&1 || { echo "$(date): SSH Failed" >> ~/Library/Logs/ssh.log 2>&1; /usr/local/bin/podman restart VPNcontainer && echo "$(date): VPNcontainer restarted" >> ~/Library/Logs/ssh.log 2>&1; }
 
 # Check the status of the machine and container, and trigger the start if they are not started.
 */2 * * * * /usr/local/bin/podman machine list | grep -q 'Currently running' || /usr/local/bin/podman machine start && /usr/local/bin/podman ps --filter "name=VPNcontainer" --filter "status=running" | grep -q VPNcontainer || /usr/local/bin/podman restart VPNcontainer
